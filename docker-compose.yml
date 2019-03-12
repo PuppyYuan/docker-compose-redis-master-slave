@@ -1,0 +1,33 @@
+version: '3'
+
+services:
+  redis-master:
+    build: ./master
+    volumes: 
+      - /Users/yuanpeng/Workbench/Docker/redis-master:/data
+    container_name: redis-master
+    networks: 
+      - redis
+
+  redis-slave1:
+    build: ./slave
+    volumes: 
+      - /Users/yuanpeng/Workbench/Docker/redis-slave1:/data
+    container_name: redis-slave1
+    depends_on:
+      - redis-master
+    networks: 
+      - redis
+
+  redis-slave2:
+    build: ./slave
+    volumes: 
+      - /Users/yuanpeng/Workbench/Docker/redis-slave2:/data
+    container_name: redis-slave2
+    depends_on:
+      - redis-master
+    networks: 
+      - redis
+
+networks:
+   redis:
